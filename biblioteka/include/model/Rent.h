@@ -25,19 +25,18 @@ class Rent {
     client_ptr client;
     vehicle_ptr vehicle;
     rentDateTime_ptr date;
-    int startDate;
-    int endDate;
-    double rentPrice;
 
 public:
 
     Rent(client_ptr client, vehicle_ptr vehicle, rentDateTime_ptr date);
     int rentDayNumber(); //liczba dni wyporzyczenia
+    int rentEndDate(); //data zakonczenia
     double countRentPrice();
     std::string rentInfo();
     std::string clientID();
     std::string vechicleId();
     boost::uuids::uuid getRentId();
+    void returnVehicle();
 };
 
 typedef std::shared_ptr<Rent> rent_ptr;

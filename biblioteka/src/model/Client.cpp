@@ -5,7 +5,10 @@
 #include "model/Client.h"
 #include "model/ClientExp.h"
 #include "model/Address.h"
+#include <model/Rent.h>
 #include <sstream>
+#include <model/Client.h>
+
 
 Client::Client(std::string firstName, std::string lastName, std::string personalID, address_ptr registeredAddress, address_ptr address ) :firstName(firstName),lastName(lastName), personalID(personalID), registeredAddress(registeredAddress), address(address){
     if(firstName == "") throw ClientExp("Empty firstName");
@@ -32,4 +35,21 @@ std::string Client::getLastName() {
 
 std::string Client::getPersonalID() {
     return personalID;
+}
+
+std::vector<rent_ptr> Client::getRents() {
+    return rents;
+}
+
+void Client::setRent(rent_ptr rent) {
+    rents.push_back(rent);
+}
+
+void Client::eraseRent(rent_ptr rent) {
+
+    for(int i = 0; i<rents.size(); i++){
+        if(rents[i] == rent){
+            rents.erase(rents.begin() + i);
+        }
+    }
 }

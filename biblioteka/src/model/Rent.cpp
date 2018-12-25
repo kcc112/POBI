@@ -12,9 +12,7 @@
 
 
 Rent::Rent(client_ptr client, vehicle_ptr vehicle, rentDateTime_ptr date) : client(client) , vehicle(vehicle), date(date){
-    if(client == NULL) throw RentExp("client == NULL");
-    if(vehicle == NULL) throw RentExp("vehicle == NULL");
-    if(date == NULL) throw RentExp("date == NULL");
+    client->setRent(rent_ptr(this));
 }
 
 int Rent::rentDayNumber() {
@@ -31,7 +29,7 @@ std::string Rent::rentInfo() {
     sout << "Start Date: " << date->getBegin() << std::endl;
     sout << "End day: " << date->rentDuration() << std::endl;//albo ile trwala renta albo na ile dni zostala stworzona
     sout << "Client Info" << client->clientInfo() << std::endl;
-    sout << "Vehicle info" << vehicle->vehicleInfo() << std::endl;
+    if(vehicle!=NULL)sout << "Vehicle info" << vehicle->vehicleInfo() << std::endl;
     return sout.str();
 }
 
@@ -45,4 +43,13 @@ std::string Rent::vechicleId() {
 
 boost::uuids::uuid Rent::getRentId() {
     return rentId;
+}
+
+void Rent::returnVehicle() {
+    client->eraseRent(rent_ptr(this));
+    date->endRentDate();
+}
+
+int Rent::rentEndDate(){
+    return date->rentDuration();
 }
