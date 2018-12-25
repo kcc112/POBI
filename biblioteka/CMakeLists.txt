@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4)
 project(Biblioteka)
 
-set(SOURCE_FILES include/model/Client.h src/model/Client.cpp include/model/ClientExp src/model/ClientExp.cpp include/model/Address.h src/model/Address.cpp src/model/AddressExp.cpp include/model/AddressExp.h)
+set(SOURCE_FILES include/model/Client.h src/model/Client.cpp include/model/ClientExp src/model/ClientExp.cpp include/model/Address.h src/model/Address.cpp src/model/AddressExp.cpp include/model/AddressExp.h src/model/Vehicle.cpp include/model/Vehicle.h src/model/VehicleExp.cpp include/model/VehicleExp.h)
 
 #utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
 add_library(Biblioteka ${SOURCE_FILES})

@@ -1,6 +1,7 @@
 #include <boost/test/unit_test.hpp>
 #include "model/Client.h"
 #include "model/Address.h"
+#include "model/Vehicle.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
@@ -21,12 +22,22 @@ BOOST_AUTO_TEST_CASE(ClientTest) {
 
 BOOST_AUTO_TEST_CASE(AddressTest) {
 
-    address_ptr a1(new Address(7, "Mariana"));
+    address_ptr a1(new Address(7,"Mariana"));
 
     BOOST_CHECK_EQUAL(a1->getAddressNumber(),7);
     BOOST_CHECK_EQUAL(a1->getStreetName(),"Mariana");
     BOOST_CHECK_THROW(Address( 0,"Mariana"), std::logic_error);
     BOOST_CHECK_THROW(Address(10,""), std::logic_error);
+}
+
+BOOST_AUTO_TEST_CASE(VehicleTest) {
+
+    vehicle_ptr v1(new Vehicle("123",20));
+    BOOST_CHECK_EQUAL(v1->getBaseRentPrice(),20);
+    BOOST_CHECK_EQUAL(v1->getID(),"123");
+    BOOST_CHECK_THROW(Vehicle("123",0), std::logic_error);
+    BOOST_CHECK_THROW(Vehicle("",20), std::logic_error);
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
