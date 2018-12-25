@@ -1,6 +1,7 @@
 #include <iostream>
 #include "model/Address.h"
 #include "model/Client.h"
+#include "model/Vehicle.h"
 #include <iostream>
 
 using namespace std;
@@ -16,6 +17,10 @@ int main(){
     client_ptr k2(new Client("Kamil","Celejewski","123",NULL,NULL));
 
     cout << k2->clientInfo() << endl;
+    
+    vehicle_ptr v1(new Vehicle("123", 10));
+    
+    cout << v1->vehicleInfo() << endl;
 
     return 0;
 }

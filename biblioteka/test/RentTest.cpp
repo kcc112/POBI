@@ -2,6 +2,8 @@
 #include "model/Client.h"
 #include "model/Address.h"
 #include "model/Vehicle.h"
+#include "model/RentDateTime.h"
+#include "model/Rent.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
@@ -38,6 +40,26 @@ BOOST_AUTO_TEST_CASE(VehicleTest) {
     BOOST_CHECK_THROW(Vehicle("123",0), std::logic_error);
     BOOST_CHECK_THROW(Vehicle("",20), std::logic_error);
 
+}
+
+BOOST_AUTO_TEST_CASE(RentalDateTimeTest) {
+
+    rentDateTime d1(new RentDateTime(20));
+    BOOST_CHECK_EQUAL(d1->rentDuration(),0);
+    d1->endRentDate(); // zakonczenie wyporzyczenia
+    BOOST_CHECK_EQUAL(d1->rentDuration(),1);
+    BOOST_CHECK_THROW(RentDateTime(40), std::logic_error);
+    BOOST_CHECK_EQUAL(d1->currentRentDuration(),1);
+}
+
+BOOST_AUTO_TEST_CASE(RentTest) {
+
+    rentDateTime d1(new RentDateTime(20));
+    address_ptr a2(new Address(8,"Macieja2"));
+    client_ptr k1(new Client("Kamil","Celejewski","123",NULL,a2));
+    vehicle_ptr v1(new Vehicle("123",20));
+    rent_ptr r1(new Rent(k1,v1,d1));
+    BOOST_CHECK_EQUAL(r1->countRentPrice(),0.0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
