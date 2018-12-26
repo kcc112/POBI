@@ -37,6 +37,7 @@ public:
     std::string vechicleId();
     boost::uuids::uuid getRentId();
     void returnVehicle();
+    client_ptr getClient();
 };
 
 typedef std::shared_ptr<Rent> rent_ptr;

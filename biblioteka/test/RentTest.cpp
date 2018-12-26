@@ -7,6 +7,7 @@
 #include "Vehicle/Car.h"
 #include "Vehicle/Moped.h"
 #include "Vehicle/Bicycle.h"
+#include "Repository/CurrentRentsRepository.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
@@ -92,6 +93,21 @@ BOOST_AUTO_TEST_CASE(RentTest) {
     BOOST_CHECK_EQUAL(r1->countRentPrice(),20);//cena po oddaniu
     BOOST_CHECK_EQUAL(k1->getRents().size(),0);//czy client ma wyporzyczenie po oddaniu
     BOOST_CHECK_EQUAL(r1->rentEndDate(),1);//ilosc dni wyporzyczenia
+}
+
+BOOST_AUTO_TEST_CASE(CurrentRentsRepositoryTest) {
+    currentRentsRepository_ptr R(new CurrentRentsRepository());
+    rentDateTime d1(new RentDateTime(20));
+    address_ptr a2(new Address(8,"Macieja2"));
+    client_ptr k1(new Client("Kamil","Celejewski","123",NULL,a2));
+    vehicle_ptr c1(new Car("A",10,"123",10));
+    vehicle_ptr c2(new Car("A",10,"124",10));
+    rent_ptr r1(new Rent(k1,c1,d1));
+    R->addRent(r1);
+    BOOST_CHECK_EQUAL(R->getClientForRentedVehicle(c1),k1);
+    BOOST_CHECK_THROW(R->getClientForRentedVehicle(c2), std::logic_error);
+    R->removeRent(r1);
+    BOOST_CHECK_EQUAL(R->getRents().size(),0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

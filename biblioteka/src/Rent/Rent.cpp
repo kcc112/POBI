@@ -53,3 +53,7 @@ void Rent::returnVehicle() {
 int Rent::rentEndDate(){
     return date->rentDuration();
 }
+
+client_ptr Rent::getClient() {
+    return client;
+}
