@@ -4,6 +4,7 @@
 #include "Vehicle/Vehicle.h"
 #include "Date/RentDateTime.h"
 #include "Rent/Rent.h"
+#include "Vehicle/Car.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
@@ -33,13 +34,14 @@ BOOST_AUTO_TEST_CASE(AddressTest) {
     BOOST_CHECK_THROW(Address(10,""), std::logic_error);
 }
 
-BOOST_AUTO_TEST_CASE(VehicleTest) {
-
-    vehicle_ptr v1(new Vehicle("123",20));
-    BOOST_CHECK_EQUAL(v1->getBaseRentPrice(),20);
-    BOOST_CHECK_EQUAL(v1->getID(),"123");
-    BOOST_CHECK_THROW(Vehicle("123",0), std::logic_error);
-    BOOST_CHECK_THROW(Vehicle("",20), std::logic_error);
+BOOST_AUTO_TEST_CASE(CarTest) {
+    car_ptr c1(new Car("A",10,"123",10));
+    BOOST_CHECK_EQUAL(c1->getBaseRentPrice(),10);
+    BOOST_CHECK_EQUAL(c1->getID(),"123");
+    BOOST_CHECK_EQUAL(c1->getSegment(),"A");
+    BOOST_CHECK_EQUAL(c1->actualRentPrice(),10);
+    BOOST_CHECK_THROW(Car("L",10,"123",10), std::logic_error);
+    BOOST_CHECK_THROW(Car("A",0,"123",10), std::logic_error);
 
 }
 
@@ -58,8 +60,8 @@ BOOST_AUTO_TEST_CASE(RentTest) {
     rentDateTime d1(new RentDateTime(20));
     address_ptr a2(new Address(8,"Macieja2"));
     client_ptr k1(new Client("Kamil","Celejewski","123",NULL,a2));
-    vehicle_ptr v1(new Vehicle("123",20));
-    rent_ptr r1(new Rent(k1,v1,d1));
+    vehicle_ptr c1(new Car("A",10,"123",10));
+    rent_ptr r1(new Rent(k1,c1,d1));
     BOOST_CHECK_EQUAL(r1->countRentPrice(),0.0);//cena przed zwroceniem
     BOOST_CHECK_EQUAL(r1->rentEndDate(),0);//ile trwalo wyporzyczenie przed zakonczeniem zawsze 0
     BOOST_CHECK_EQUAL(k1->getRents().size(),1);

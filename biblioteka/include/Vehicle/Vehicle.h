@@ -11,15 +11,16 @@
 class Vehicle {
 
     std::string id;
-    int baseRentPrice;
+    double baseRentPrice;
 
 public:
 
-    Vehicle(std::string id, int baseRentPrice);
+    Vehicle(std::string id, double baseRentPrice);
 
-    std::string vehicleInfo();
-    std::string getID();
-    int getBaseRentPrice();
+    virtual std::string vehicleInfo() = 0;
+    virtual std::string getID();
+    virtual double getBaseRentPrice();
+    virtual double actualRentPrice();
 
 };
 
