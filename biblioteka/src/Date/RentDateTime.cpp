@@ -2,12 +2,12 @@
 // Created by pobi on 25.12.18.
 //
 
-#include "model/RentDateTime.h"
+#include "Date/RentDateTime.h"
 #include "boost/date_time/gregorian/gregorian.hpp"
 #include <sstream>
-#include <model/RentDateTime.h>
+#include <Date/RentDateTime.h>
 
-#include "model/DateExp.h"
+#include "Exceptions/DateExp.h"
 
 
 RentDateTime::RentDateTime(int endPublic) : endPublic(endPublic), begin(boost::local_time::local_sec_clock::local_time(timeZone)){

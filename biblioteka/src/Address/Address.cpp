@@ -2,8 +2,8 @@
 // Created by pobi on 25.12.18.
 //
 
-#include "model/Address.h"
-#include "model/AddressExp.h"
+#include "Address/Address.h"
+#include "Exceptions/AddressExp.h"
 #include <sstream>
 
 

@@ -2,7 +2,7 @@
 // Created by pobi on 25.12.18.
 //
 
-#include "model/VehicleExp.h"
+#include "Exceptions/VehicleExp.h"
 
 using namespace std;
 

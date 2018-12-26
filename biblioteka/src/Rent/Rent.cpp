@@ -2,13 +2,13 @@
 // Created by pobi on 25.12.18.
 //
 
-#include "model/Rent.h"
-#include "model/RentExp.h"
-#include "model/RentDateTime.h"
-#include "model/Client.h"
-#include "model/Vehicle.h"
+#include "Rent/Rent.h"
+#include "Exceptions/RentExp.h"
+#include "Date/RentDateTime.h"
+#include "Client/Client.h"
+#include "Vehicle/Vehicle.h"
 #include <sstream>
-#include <model/Rent.h>
+#include <Rent/Rent.h>
 
 
 Rent::Rent(client_ptr client, vehicle_ptr vehicle, rentDateTime_ptr date) : client(client) , vehicle(vehicle), date(date){
@@ -29,7 +29,7 @@ std::string Rent::rentInfo() {
     sout << "Start Date: " << date->getBegin() << std::endl;
     sout << "End day: " << date->rentDuration() << std::endl;//albo ile trwala renta albo na ile dni zostala stworzona
     sout << "Client Info" << client->clientInfo() << std::endl;
-    if(vehicle!=NULL)sout << "Vehicle info" << vehicle->vehicleInfo() << std::endl;
+    sout << "Vehicle info" << vehicle->vehicleInfo() << std::endl;
     return sout.str();
 }
 

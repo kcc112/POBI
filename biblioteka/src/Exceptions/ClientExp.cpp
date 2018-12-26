@@ -2,7 +2,7 @@
 // Created by pobi on 25.12.18.
 //
 
-#include "model/ClientExp.h"
+#include "Exceptions/ClientExp.h"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #include <iostream>
-#include "model/Address.h"
-#include "model/Client.h"
-#include "model/Vehicle.h"
+#include "Address/Address.h"
+#include "Client/Client.h"
+#include "Vehicle/Vehicle.h"
 #include <iostream>
 
 using namespace std;

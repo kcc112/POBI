@@ -1,9 +1,9 @@
 #include <boost/test/unit_test.hpp>
-#include "model/Client.h"
-#include "model/Address.h"
-#include "model/Vehicle.h"
-#include "model/RentDateTime.h"
-#include "model/Rent.h"
+#include "Client/Client.h"
+#include "Address/Address.h"
+#include "Vehicle/Vehicle.h"
+#include "Date/RentDateTime.h"
+#include "Rent/Rent.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)

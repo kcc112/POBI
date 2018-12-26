@@ -2,7 +2,7 @@
 // Created by pobi on 25.12.18.
 //
 
-#include "model/RentExp.h"
+#include "Exceptions/RentExp.h"
 
 using namespace std;
 

@@ -2,8 +2,8 @@
 // Created by pobi on 25.12.18.
 //
 
-#include "model/Vehicle.h"
-#include "model/VehicleExp.h"
+#include "Vehicle/Vehicle.h"
+#include "Exceptions/VehicleExp.h"
 #include <sstream>
 
 Vehicle::Vehicle(std::string id, int baseRentPrice) : id(id), baseRentPrice(baseRentPrice){
