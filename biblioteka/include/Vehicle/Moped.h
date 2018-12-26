@@ -6,9 +6,16 @@
 #define POBIPROJECT_MOPED_H
 
 
-class Moped {
+#include "MotorVehicle.h"
 
+class Moped : public MotorVehicle{
+
+public:
+    Moped(int engineDisplacement, std::string id, double baseRentPrice);
+    virtual ~Moped(){};
+    virtual std::string vehicleInfo();
 };
 
+typedef std::shared_ptr<Moped> moped_ptr;
 
 #endif //POBIPROJECT_MOPED_H

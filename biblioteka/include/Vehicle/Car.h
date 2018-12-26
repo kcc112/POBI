@@ -7,7 +7,6 @@
 
 
 #include "MotorVehicle.h"
-#include <sstream>
 
 class Car : public MotorVehicle {
 

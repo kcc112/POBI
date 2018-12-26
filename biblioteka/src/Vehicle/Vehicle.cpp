@@ -10,7 +10,6 @@ Vehicle::Vehicle(std::string id, double baseRentPrice) : id(id), baseRentPrice(b
     if(id == "") throw VehicleExp("Empty id");
 }
 
-
 std::string Vehicle::getID() {
     return id;
 }

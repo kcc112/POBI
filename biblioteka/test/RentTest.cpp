@@ -5,16 +5,16 @@
 #include "Date/RentDateTime.h"
 #include "Rent/Rent.h"
 #include "Vehicle/Car.h"
+#include "Vehicle/Moped.h"
+#include "Vehicle/Bicycle.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
 
 BOOST_AUTO_TEST_CASE(ClientTest) {
-
     address_ptr a1(new Address(7,"Macieja"));
     address_ptr a2(new Address(8,"Macieja2"));
     client_ptr k1(new Client("Kamil","Celejewski","123",a1,a2));
-
     BOOST_CHECK_EQUAL(k1->getFirstName(),"Kamil");
     BOOST_CHECK_EQUAL(k1->getPersonalID(),"123");
     BOOST_CHECK_EQUAL(k1->getLastName(),"Celejewski");
@@ -25,9 +25,7 @@ BOOST_AUTO_TEST_CASE(ClientTest) {
 }
 
 BOOST_AUTO_TEST_CASE(AddressTest) {
-
     address_ptr a1(new Address(7,"Mariana"));
-
     BOOST_CHECK_EQUAL(a1->getAddressNumber(),7);
     BOOST_CHECK_EQUAL(a1->getStreetName(),"Mariana");
     BOOST_CHECK_THROW(Address( 0,"Mariana"), std::logic_error);
@@ -40,13 +38,38 @@ BOOST_AUTO_TEST_CASE(CarTest) {
     BOOST_CHECK_EQUAL(c1->getID(),"123");
     BOOST_CHECK_EQUAL(c1->getSegment(),"A");
     BOOST_CHECK_EQUAL(c1->actualRentPrice(),10);
+    BOOST_CHECK_EQUAL(c1->getEngineDisplacement(),10);
     BOOST_CHECK_THROW(Car("L",10,"123",10), std::logic_error);
+    BOOST_CHECK_THROW(Car("",10,"123",10), std::logic_error);
     BOOST_CHECK_THROW(Car("A",0,"123",10), std::logic_error);
-
+    BOOST_CHECK_THROW(Car("L",10,"",10), std::logic_error);
+    BOOST_CHECK_THROW(Car("L",10,"123",0), std::logic_error);
 }
 
-BOOST_AUTO_TEST_CASE(RentalDateTimeTest) {
+BOOST_AUTO_TEST_CASE(MopedTest) {
+    moped_ptr c1(new Moped(10,"123",10));
+    moped_ptr c2(new Moped(2001,"123",10));
+    BOOST_CHECK_EQUAL(c2->actualRentPrice(),15);
+    BOOST_CHECK_EQUAL(c1->getBaseRentPrice(),10);
+    BOOST_CHECK_EQUAL(c1->getID(),"123");
+    BOOST_CHECK_EQUAL(c1->actualRentPrice(),10);
+    BOOST_CHECK_EQUAL(c1->getEngineDisplacement(),10);
+    BOOST_CHECK_THROW(Moped(0,"123",10), std::logic_error);
+    BOOST_CHECK_THROW(Moped(10,"123",0), std::logic_error);
+    BOOST_CHECK_THROW(Moped(10,"",10), std::logic_error);
+}
 
+BOOST_AUTO_TEST_CASE(BicycleTest) {
+    bicycle_ptr c1(new Bicycle("123",10));
+    BOOST_CHECK_EQUAL(c1->getBaseRentPrice(),10);
+    BOOST_CHECK_EQUAL(c1->getID(),"123");
+    BOOST_CHECK_EQUAL(c1->actualRentPrice(),10);
+    BOOST_CHECK_THROW(Bicycle("123",0), std::logic_error);
+    BOOST_CHECK_THROW(Bicycle("",10), std::logic_error);
+}
+
+
+BOOST_AUTO_TEST_CASE(RentalDateTimeTest) {
     rentDateTime d1(new RentDateTime(20));
     BOOST_CHECK_EQUAL(d1->rentDuration(),0);
     d1->endRentDate(); // zakonczenie wyporzyczenia
@@ -56,7 +79,6 @@ BOOST_AUTO_TEST_CASE(RentalDateTimeTest) {
 }
 
 BOOST_AUTO_TEST_CASE(RentTest) {
-
     rentDateTime d1(new RentDateTime(20));
     address_ptr a2(new Address(8,"Macieja2"));
     client_ptr k1(new Client("Kamil","Celejewski","123",NULL,a2));

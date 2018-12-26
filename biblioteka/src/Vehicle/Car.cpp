@@ -7,7 +7,7 @@
 #include <sstream>
 
 Car::Car(std::string segment, int engineDisplacement, std::string id, double baseRentPrice) : MotorVehicle(engineDisplacement, id, baseRentPrice) ,segment(segment){
-if(segment !="A"&&"B"&&"C"&&"D"&&"E"&&"F")  throw VehicleExp("Niepoprwny aegmwnt tylko A B C D E F");
+if(segment !="A"&&"B"&&"C"&&"D"&&"E"&&"F"&&"")  throw VehicleExp("Niepoprwny aegmwnt tylko A B C D E F");
 }
 
 double Car::actualRentPrice() {
@@ -24,11 +24,10 @@ double Car::actualRentPrice() {
 
 std::string Car::vehicleInfo() {
     std::ostringstream sout;
-    sout << "VEHICLE INFORMATIONS:" << std::endl;
+    sout << "CAR INFORMATIONS:" << std::endl;
     sout << "Id: " << getID() << std::endl;
     sout << "Base Rent Price: " << getBaseRentPrice() << std::endl;
     sout << "Actual rental price: " << actualRentPrice() << std::endl;
-    sout << "Name: Car" << std::endl;
     sout << "Pojemnosc silnika: " << getEngineDisplacement()<< std::endl;
     sout << "Segment: " << getSegment() << std::endl;
     return sout.str();
