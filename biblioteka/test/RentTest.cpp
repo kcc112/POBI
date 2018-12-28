@@ -11,6 +11,7 @@
 #include "Repository/VehicleRepository.h"
 #include "Client/ClientType.h"
 #include "Client/ClientTypes.h"
+#include "Repository/ClientRepository.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
@@ -144,5 +145,18 @@ BOOST_AUTO_TEST_CASE(VehicleRepositorTest) {
     V->removeVehicle(c2);
     BOOST_CHECK_THROW(V->findVehicle(1),std::logic_error);//Czy po usunięciu pojazdu znajduje się jeszcze w repozytorium
     BOOST_CHECK_EQUAL(V->findVehicle(0),c1);//czy zostały usunięte wszystkie pojazdy
-    }
+}
+
+BOOST_AUTO_TEST_CASE(ClientRepositoryTest) {
+        client_ptr k1(new Client("Kamil", "Celejewski", "123", nullptr, nullptr));
+        client_ptr k2(new Client("Kamil", "Celejewski", "124", nullptr, nullptr));
+        clientRepository_ptr R(new ClientRepository());
+        clientGold_ptr g(new ClientGold());
+        R->addClient(k1);
+        R->addClient(k2);
+        R->changeType(k1,g);
+        BOOST_CHECK_EQUAL(k1->getClientType(), g);
+        R->removeClient(k1);
+        R->removeClientById(0);
+}
 BOOST_AUTO_TEST_SUITE_END()
