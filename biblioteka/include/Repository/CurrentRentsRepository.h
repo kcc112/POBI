@@ -22,8 +22,8 @@ class CurrentRentsRepository {
     std::vector<rent_ptr> rents;
 
 public:
-    CurrentRentsRepository();
-    ~CurrentRentsRepository();
+    CurrentRentsRepository() = default;
+    ~CurrentRentsRepository() = default;
 
     void addRent(rent_ptr rent);
     void removeRent(rent_ptr rent);

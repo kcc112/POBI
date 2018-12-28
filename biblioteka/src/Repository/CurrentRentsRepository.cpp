@@ -10,13 +10,6 @@
 #include <sstream>
 #include <Repository/CurrentRentsRepository.h>
 
-
-CurrentRentsRepository::CurrentRentsRepository() {
-}
-
-CurrentRentsRepository::~CurrentRentsRepository() {
-}
-
 void CurrentRentsRepository::addRent(rent_ptr rent) {
     rents.push_back(rent);
 }

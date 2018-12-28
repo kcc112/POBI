@@ -16,6 +16,7 @@ class Address {
 public:
 
     Address(int addressNumber, std::string streetName);
+    ~Address() = default;
 
     int getAddressNumber();
     std::string getStreetName();

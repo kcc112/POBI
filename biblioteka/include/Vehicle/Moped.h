@@ -12,7 +12,7 @@ class Moped : public MotorVehicle{
 
 public:
     Moped(int engineDisplacement, std::string id, double baseRentPrice);
-    virtual ~Moped(){};
+    ~Moped() = default;
     virtual std::string vehicleInfo();
 };
 

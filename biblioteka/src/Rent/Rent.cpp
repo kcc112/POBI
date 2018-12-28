@@ -7,8 +7,9 @@
 #include "Date/RentDateTime.h"
 #include "Client/Client.h"
 #include "Vehicle/Vehicle.h"
+#include "Rent/Rent.h"
 #include <sstream>
-#include <Rent/Rent.h>
+
 
 
 Rent::Rent(client_ptr client, vehicle_ptr vehicle, rentDateTime_ptr date) : client(client) , vehicle(vehicle), date(date){
@@ -20,7 +21,7 @@ int Rent::rentDayNumber() {
 }
 
 double Rent::countRentPrice() {
-     return date->rentDuration()*vehicle->getBaseRentPrice();
+    return date->rentDuration() * vehicle->getBaseRentPrice() - client->discount(date->rentDuration() * vehicle->getBaseRentPrice());
 }
 
 std::string Rent::rentInfo() {
@@ -46,7 +47,17 @@ boost::uuids::uuid Rent::getRentId() {
 }
 
 void Rent::returnVehicle() {
-    client->eraseRent(rent_ptr(this));
+    std::vector<rent_ptr> r = client->getRents();
+
+    int i = 0;
+    bool flag = false;
+    while((i < r.size()) && (flag!= true)) {
+        if (r[i]->getRentId() == getRentId()) {
+            client->eraseRent(r[i]);
+            flag = true;
+        }
+        i++;
+    }
     date->endRentDate();
 }
 

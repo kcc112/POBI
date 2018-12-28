@@ -25,6 +25,7 @@ class RentDateTime {
 public:
 
     RentDateTime(int endPublic);
+    ~RentDateTime() = default;
     int rentDuration();
     void endRentDate();
     LocalTime getBegin();

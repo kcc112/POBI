@@ -7,12 +7,6 @@
 #include "Exceptions/RepositoryExp.h"
 #include <sstream>
 
-VehicleRepository::VehicleRepository() {
-}
-
-VehicleRepository::~VehicleRepository() {
-}
-
 std::string VehicleRepository::vehicleReport() {
     std::ostringstream sout;
     for(auto i:vehicles){

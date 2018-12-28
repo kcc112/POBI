@@ -12,7 +12,7 @@ class Bicycle : public Vehicle{
 
 public:
     Bicycle(std::string id, double baseRentPrice);
-    virtual ~Bicycle(){};
+    ~Bicycle() = default;
     virtual std::string vehicleInfo();
 };
 

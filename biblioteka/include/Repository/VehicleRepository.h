@@ -19,8 +19,8 @@ class VehicleRepository {
 
 public:
 
-    VehicleRepository();
-    ~VehicleRepository();
+    VehicleRepository() = default;
+    ~VehicleRepository() = default;
     std::string vehicleReport();
     vehicle_ptr findVehicle(int nr);
     void addVehicle(vehicle_ptr vehicle);

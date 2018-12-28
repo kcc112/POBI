@@ -11,7 +11,7 @@ MotorVehicle::MotorVehicle(int engineDisplacement , std::string id , double base
 
 double MotorVehicle::actualRentPrice() {
 
-    double actualRentalPrice;
+    double actualRentalPrice = 1;
 
     if(getEngineDisplacement() < 1000) actualRentalPrice = getBaseRentPrice()*1.0;
     else if(getEngineDisplacement() >= 1000 && getEngineDisplacement() <= 2000){

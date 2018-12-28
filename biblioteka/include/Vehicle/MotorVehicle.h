@@ -13,8 +13,7 @@ class MotorVehicle : public Vehicle{
 
 public:
     MotorVehicle(int engineDisplacement, std::string id, double baseRentPrice);
-    virtual ~MotorVehicle(){};
-
+    virtual ~MotorVehicle() = default;
     virtual std::string vehicleInfo() = 0;
     virtual double actualRentPrice();
     virtual int getEngineDisplacement();

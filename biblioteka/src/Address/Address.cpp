@@ -9,7 +9,7 @@
 
 Address::Address(int addressNumber, std::string streetName) : addressNumber(addressNumber), streetName(streetName){
     if(addressNumber == 0) throw AddressExp("Address number can't be zero");
-    if(streetName == "") throw AddressExp("Empty streetName");
+    if(streetName.empty()) throw AddressExp("Empty streetName");
 }
 
 int Address::getAddressNumber() {

@@ -14,7 +14,7 @@ class Car : public MotorVehicle {
 
 public:
     Car(std::string segment, int engineDisplacement, std::string id, double baseRentPrice);
-    virtual ~Car(){};
+    ~Car() = default;
 
     virtual double actualRentPrice();
     virtual std::string vehicleInfo();

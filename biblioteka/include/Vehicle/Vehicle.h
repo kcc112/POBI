@@ -16,7 +16,7 @@ class Vehicle {
 public:
 
     Vehicle(std::string id, double baseRentPrice);
-
+    virtual ~Vehicle() = default;
     virtual std::string vehicleInfo() = 0;
     virtual std::string getID();
     virtual double getBaseRentPrice();
