@@ -8,6 +8,7 @@
 #include "Vehicle/Moped.h"
 #include "Vehicle/Bicycle.h"
 #include "Repository/CurrentRentsRepository.h"
+#include "Repository/VehicleRepository.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
@@ -110,4 +111,17 @@ BOOST_AUTO_TEST_CASE(CurrentRentsRepositoryTest) {
     BOOST_CHECK_EQUAL(R->getRents().size(),0);
 }
 
+BOOST_AUTO_TEST_CASE(VehicleRepositorTest) {
+    vehicleRepository_ptr V(new VehicleRepository());
+    vehicle_ptr c1(new Car("A", 10, "123", 10));
+    vehicle_ptr c2(new Car("A", 10, "124", 10));
+    V->addVehicle(c1);
+    V->addVehicle(c2);
+    BOOST_CHECK_EQUAL(V->findVehicle(0),c1);
+    BOOST_CHECK_EQUAL(V->findVehicle(1),c2);
+    BOOST_CHECK_THROW(V->findVehicle(2),std::logic_error);
+    V->removeVehicle(c2);
+    BOOST_CHECK_THROW(V->findVehicle(1),std::logic_error);
+    BOOST_CHECK_EQUAL(V->findVehicle(0),c1);
+    }
 BOOST_AUTO_TEST_SUITE_END()

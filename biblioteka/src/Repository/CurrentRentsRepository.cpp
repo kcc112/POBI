@@ -22,8 +22,14 @@ void CurrentRentsRepository::addRent(rent_ptr rent) {
 }
 
 void CurrentRentsRepository::removeRent(rent_ptr rent) {
-    for(int i = 0; i < rents.size(); i++){
-        if(rents[i]->getRentId() == rent->getRentId()) rents.erase(rents.begin()+i);
+    int i = 0;
+    bool flag = false;
+    while((i < rents.size()) && (flag!= true)){
+        if(rents[i]->getRentId() == rent->getRentId()){
+            rents.erase(rents.begin()+i);
+            flag = true;
+        }
+        i++;
     }
 }
 
