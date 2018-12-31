@@ -2,6 +2,8 @@
 // Created by pobi on 28.12.18.
 //
 
+#include <Repository/ClientRepository.h>
+
 #include "Repository/ClientRepository.h"
 #include "Client/Client.h"
 
@@ -27,4 +29,12 @@ void ClientRepository::removeClientById(int nr) {
 
 void ClientRepository::changeType(client_ptr client, clientType_ptr clientType) {
     client->setClientType(clientType);
+}
+
+client_ptr ClientRepository::findClient(client_ptr client) {
+
+    for(auto i:clientList){
+        if(i->getPersonalID() == client->getPersonalID()) return i;
+    }
+    return nullptr;
 }

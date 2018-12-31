@@ -25,6 +25,7 @@ public:
     vehicle_ptr findVehicle(int nr);
     void addVehicle(vehicle_ptr vehicle);
     void removeVehicle(vehicle_ptr vehicle);
+    vehicle_ptr findVehicle(vehicle_ptr vehicle);
 };
 
 typedef std::shared_ptr<VehicleRepository> vehicleRepository_ptr;

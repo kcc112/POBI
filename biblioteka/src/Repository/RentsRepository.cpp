@@ -2,19 +2,19 @@
 // Created by pobi on 26.12.18.
 //
 
-#include "Repository/CurrentRentsRepository.h"
+#include "Repository/RentsRepository.h"
 #include "Rent/Rent.h"
 #include "Client/Client.h"
 #include "Vehicle/Vehicle.h"
 #include "Exceptions/RepositoryExp.h"
 #include <sstream>
-#include <Repository/CurrentRentsRepository.h>
+#include <Repository/RentsRepository.h>
 
-void CurrentRentsRepository::addRent(rent_ptr rent) {
+void RentsRepository::addRent(rent_ptr rent) {
     rents.push_back(rent);
 }
 
-void CurrentRentsRepository::removeRent(rent_ptr rent) {
+void RentsRepository::removeRent(rent_ptr rent) {
     int i = 0;
     bool flag = false;
     while((i < rents.size()) && (flag!= true)){
@@ -26,18 +26,17 @@ void CurrentRentsRepository::removeRent(rent_ptr rent) {
     }
 }
 
-client_ptr CurrentRentsRepository::getClientForRentedVehicle(vehicle_ptr vehicle) {
+client_ptr RentsRepository::getClientForRentedVehicle(vehicle_ptr vehicle) {
     for(auto i:rents){
         if(i->vechicleId() == vehicle->getID()){
             return i->getClient();
-        }
-        else{
-            throw RepositoryExp("Nie ma takiego pojazdu");
+        } else{
+            return nullptr;
         }
     }
 }
 
-std::string CurrentRentsRepository::rentReport() {
+std::string RentsRepository::rentReport() {
     std::ostringstream sout;
     for(auto i:rents){
         sout << i->rentInfo() << std::endl;
@@ -45,6 +44,13 @@ std::string CurrentRentsRepository::rentReport() {
     return sout.str();
 }
 
-std::vector<rent_ptr> CurrentRentsRepository::getRents() {
+std::vector<rent_ptr> RentsRepository::getRents() {
     return rents;
+}
+
+rent_ptr RentsRepository::findRent(rent_ptr rent) {
+    for(auto i:rents){
+        if(i->getRentId() == rent->getRentId()) return i;
+    }
+    return nullptr;
 }

@@ -7,11 +7,12 @@
 #include "Vehicle/Car.h"
 #include "Vehicle/Moped.h"
 #include "Vehicle/Bicycle.h"
-#include "Repository/CurrentRentsRepository.h"
+#include "Repository/RentsRepository.h"
 #include "Repository/VehicleRepository.h"
 #include "Client/ClientType.h"
 #include "Client/ClientTypes.h"
 #include "Repository/ClientRepository.h"
+#include "Managers/RentsManager.h"
 
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
@@ -116,8 +117,8 @@ BOOST_AUTO_TEST_CASE(RentTest) {
     BOOST_CHECK_EQUAL(r1->rentEndDate(),1);//Ilosc dni wyporzyczenia
 }
 
-BOOST_AUTO_TEST_CASE(CurrentRentsRepositoryTest) {
-    currentRentsRepository_ptr R(new CurrentRentsRepository());
+BOOST_AUTO_TEST_CASE(RentsRepositoryTest) {
+    rentsRepository_ptr R(new RentsRepository());
     rentDateTime d1(new RentDateTime(20));
     address_ptr a2(new Address(8,"Macieja2"));
     client_ptr k1(new Client("Kamil","Celejewski","123",nullptr,a2));
@@ -127,7 +128,7 @@ BOOST_AUTO_TEST_CASE(CurrentRentsRepositoryTest) {
     R->addRent(r1);
     //Klient ma typ podstawowy więc zniżka 0
     BOOST_CHECK_EQUAL(R->getClientForRentedVehicle(c1),k1);
-    BOOST_CHECK_THROW(R->getClientForRentedVehicle(c2), std::logic_error);//Nie ma w repozytorium wypożyczenie które odpowiadało by danemu pojazdowi
+    BOOST_CHECK_EQUAL(R->getClientForRentedVehicle(c2), nullptr);//Nie ma w repozytorium wypożyczenie które odpowiadało by danemu pojazdowi
     R->removeRent(r1);
     BOOST_CHECK_EQUAL(R->getRents().size(),0);//Czy wypożyczenie zostało pomyślnie usunięte
 }
@@ -148,15 +149,23 @@ BOOST_AUTO_TEST_CASE(VehicleRepositorTest) {
 }
 
 BOOST_AUTO_TEST_CASE(ClientRepositoryTest) {
-        client_ptr k1(new Client("Kamil", "Celejewski", "123", nullptr, nullptr));
-        client_ptr k2(new Client("Kamil", "Celejewski", "124", nullptr, nullptr));
-        clientRepository_ptr R(new ClientRepository());
-        clientGold_ptr g(new ClientGold());
-        R->addClient(k1);
-        R->addClient(k2);
-        R->changeType(k1,g);
-        BOOST_CHECK_EQUAL(k1->getClientType(), g);
-        R->removeClient(k1);
-        R->removeClientById(0);
+    client_ptr k1(new Client("Kamil", "Celejewski", "123", nullptr, nullptr));
+    client_ptr k2(new Client("Kamil", "Celejewski", "124", nullptr, nullptr));
+    clientRepository_ptr R(new ClientRepository());
+    clientGold_ptr g(new ClientGold());
+    R->addClient(k1);
+    R->addClient(k2);
+    R->changeType(k1,g);
+    BOOST_CHECK_EQUAL(k1->getClientType(), g);
+    R->removeClient(k1);
+    R->removeClientById(0);
+}
+
+BOOST_AUTO_TEST_CASE(RentManagerTest) {
+    clientRepository_ptr K(new ClientRepository());
+    vehicleRepository_ptr V(new VehicleRepository());
+    rentsRepository_ptr CR(new RentsRepository());
+    rentsRepository_ptr AR(new RentsRepository());
+    rentsManager_ptr M(new RentsManager(CR, AR, K, V));
 }
 BOOST_AUTO_TEST_SUITE_END()

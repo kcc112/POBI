@@ -27,6 +27,7 @@ public:
     void removeClient(client_ptr client);
     void removeClientById(int nr);
     void changeType(client_ptr client, clientType_ptr clientType);
+    client_ptr findClient(client_ptr client);
 };
 
 typedef std::shared_ptr<ClientRepository> clientRepository_ptr;

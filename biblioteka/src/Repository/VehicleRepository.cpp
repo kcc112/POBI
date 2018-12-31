@@ -35,3 +35,10 @@ void VehicleRepository::removeVehicle(vehicle_ptr vehicle) {
         i++;
     }
 }
+
+vehicle_ptr VehicleRepository::findVehicle(vehicle_ptr vehicle) {
+    for(auto i:vehicles){
+        if(i->getID() == vehicle->getID()) return i;
+    }
+    return nullptr;
+}
