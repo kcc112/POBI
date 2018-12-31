@@ -30,10 +30,9 @@ client_ptr RentsRepository::getClientForRentedVehicle(vehicle_ptr vehicle) {
     for(auto i:rents){
         if(i->vechicleId() == vehicle->getID()){
             return i->getClient();
-        } else{
-            return nullptr;
         }
     }
+    return nullptr;
 }
 
 std::string RentsRepository::rentReport() {

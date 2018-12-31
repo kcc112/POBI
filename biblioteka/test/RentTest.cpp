@@ -167,5 +167,51 @@ BOOST_AUTO_TEST_CASE(RentManagerTest) {
     rentsRepository_ptr CR(new RentsRepository());
     rentsRepository_ptr AR(new RentsRepository());
     rentsManager_ptr M(new RentsManager(CR, AR, K, V));
+    BOOST_CHECK_THROW(RentsManager(CR,nullptr,nullptr,nullptr), std::logic_error);
+    BOOST_CHECK_THROW(RentsManager(CR,AR,nullptr,nullptr), std::logic_error);
+    BOOST_CHECK_THROW(RentsManager(CR,AR,K,nullptr), std::logic_error);
+
+    vehicle_ptr c1(new Car("A", 10, "123", 10));
+    vehicle_ptr c2(new Car("A", 10, "124", 10));
+    vehicle_ptr c3(new Car("A", 10, "125", 10));
+    V->addVehicle(c1);
+
+    client_ptr k1(new Client("Kamil", "Celejewski", "123", nullptr, nullptr));
+    client_ptr k2(new Client("Kamil", "Celejewski", "124", nullptr, nullptr));
+    client_ptr k3(new Client("Kamil", "Celejewski", "125", nullptr, nullptr));
+    K->addClient(k1);
+
+    rentDateTime d1(new RentDateTime(20));
+    rentDateTime d2(new RentDateTime(22));
+
+    M->rentVehicle(k1,c1,d1);
+    BOOST_CHECK_THROW(M->rentVehicle(k2,c1,d1), std::logic_error);//Klienta nie ma w bazie
+    BOOST_CHECK_THROW(M->rentVehicle(k1,c2,d1), std::logic_error);//Pojazdu nie ma w bazie
+    BOOST_CHECK_THROW(M->rentVehicle(k1,c1,d1), std::logic_error);//Dany pojazd jest już wypożyczony
+    BOOST_CHECK_EQUAL(CR->getRents().size(),1);//Czy w repozytorium wypożyczeni znajduje się utworzone wypożyczenie
+
+    V->addVehicle(c2);
+    K->addClient(k2);
+
+    BOOST_CHECK_THROW(M->rentVehicle(k1,c2,d2), std::logic_error);//Czy dany typ nie pozwala na wypożyczenie większej ilości pojazdów
+
+    BOOST_CHECK_THROW(M->returnVehicle(k3,c1), std::logic_error);//Klient nie istnieje w bazie
+    BOOST_CHECK_THROW(M->returnVehicle(k1,c3), std::logic_error);//Nie ma takiego pojazdu
+    BOOST_CHECK_THROW(M->returnVehicle(k1,c2), std::logic_error);//Klient nie wypożyczył tego pojazdu
+
+    M->returnVehicle(k1,c1);
+    BOOST_CHECK_EQUAL(CR->getRents().size(),0);//Czy repozytorium aktualnych wypożyczeni jest puste
+    BOOST_CHECK_EQUAL(AR->getRents().size(),1);//Czy repozytorium archiwalnych wypożyczeni zawiera jedno wypożyczenie
+    BOOST_CHECK_EQUAL(k1->getRents().size(),0);//Czy klient posiada to wypożyczenie na liście swoich wypożyczeń
+    BOOST_CHECK_EQUAL(M->getAllClientRents(k1).size(),1);//Ilość zarchiwizowanych rent klięta
+    BOOST_CHECK_EQUAL(M->checkClientRentBallance(k1),10.0);//Łączna suma ostatecznych cen klienta
+
+    M->rentVehicle(k1,c1,d1);
+    BOOST_CHECK_EQUAL(CR->getRents().size(),1);//Czy w repozytorium wypożyczeni znajduje się utworzone wypożyczenie
+    M->returnVehicle(k1,c1);
+    BOOST_CHECK_EQUAL(CR->getRents().size(),0);//Czy repozytorium aktualnych wypożyczeni jest puste
+    BOOST_CHECK_EQUAL(AR->getRents().size(),2);//Czy repozytorium archiwalnych wypożyczeni zawiera dwa wypożyczenie
+    BOOST_CHECK_EQUAL(M->getAllClientRents(k1).size(),2);//Ilość zarchiwizowanych rent klięta
+    BOOST_CHECK_EQUAL(M->checkClientRentBallance(k1),20.0);//Łączna suma ostatecznych cen klienta
 }
 BOOST_AUTO_TEST_SUITE_END()
